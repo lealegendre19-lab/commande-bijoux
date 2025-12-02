@@ -17,100 +17,66 @@ body {
     color: #fff;
 }
 
-/* --- CONTENEUR PRINCIPAL --- */
+/* --- CONTENEUR --- */
 .container {
     max-width: 750px;
     margin: 40px auto;
     padding: 30px;
-    background: rgba(0, 0, 0, 0.55);
+    background: rgba(0,0,0,0.55);
     border-radius: 12px;
     backdrop-filter: blur(4px);
     box-shadow: 0 0 25px rgba(0,0,0,0.5);
 }
 
-/* --- TITRE --- */
-h1 {
-    text-align: center;
-    font-size: 36px;
-    margin-bottom: 10px;
-    letter-spacing: 1px;
+/* TITRES */
+h1 { text-align:center; font-size:36px; }
+h2 { margin-top:25px; border-bottom:1px solid rgba(255,255,255,0.3); padding-bottom:6px; }
+
+/* FORM */
+label { display:block; margin:10px 0; font-size:18px; }
+input, select, textarea {
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border-radius:6px;
+    border:none;
+    font-size:16px;
 }
 
-/* --- SOUS-TITRE --- */
-h2 {
-    margin-top: 25px;
-    font-size: 26px;
-    border-bottom: 1px solid rgba(255,255,255,0.3);
-    padding-bottom: 6px;
-}
-
-/* --- SECTIONS --- */
-section {
-    margin-bottom: 25px;
-}
-
-/* --- LABELS --- */
-label {
-    display: block;
-    margin: 10px 0;
-    cursor: pointer;
-    font-size: 18px;
-}
-
-/* --- SELECT --- */
-select {
-    padding: 8px;
-    border-radius: 6px;
-    border: none;
-    background: rgba(255,255,255,0.9);
-    font-size: 16px;
-}
-
-/* --- TOTAL --- */
+/* TOTAL */
 .total {
-    font-size: 28px;
-    font-weight: bold;
-    text-align: center;
-    margin-top: 20px;
-    background: rgba(255,255,255,0.15);
-    padding: 15px;
-    border-radius: 10px;
+    font-size:26px;
+    font-weight:bold;
+    text-align:center;
+    background:rgba(255,255,255,0.15);
+    padding:15px;
+    border-radius:10px;
+    margin-top:20px;
 }
 
-/* --- BOUTON --- */
+/* BOUTON */
 button {
-    width: 100%;
-    padding: 18px;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    border: none;
-    border-radius: 10px;
-    background: linear-gradient(135deg, #d4af37, #b8860b);
-    color: #000;
-    margin-top: 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-    transition: 0.2s;
+    width:100%;
+    padding:18px;
+    font-size:20px;
+    font-weight:bold;
+    cursor:pointer;
+    border:none;
+    border-radius:10px;
+    background:linear-gradient(135deg,#d4af37,#b8860b);
+    color:#000;
+    margin-top:25px;
 }
-button:hover {
-    transform: scale(1.03);
-    box-shadow: 0 6px 18px rgba(0,0,0,0.5);
-}
+button:hover { transform:scale(1.03); }
 </style>
 
 <script>
 function updateTotal() {
     let total = 0;
 
-    const basePrices = {
-        "charm": 10,
-        "collier": 10,
-        "collierCharms": 20,
-        "boucles": 20
-    };
-
-    const baseChoice = document.querySelector("input[name='type']:checked");
-    if (baseChoice) total += basePrices[baseChoice.value];
+    const basePrices = { charm:10, collier:10, collierCharms:20, boucles:20 };
+    const base = document.querySelector("input[name='type']:checked");
+    if (base) total += basePrices[base.value];
 
     if (document.getElementById("lait").checked) total += 5;
     if (document.getElementById("crins").checked) total += 5;
@@ -122,78 +88,58 @@ function updateTotal() {
 
     document.getElementById("total").innerText = total + " €";
 }
-
-function envoyerCommande() {
-    let contenu = "Nouvelle commande :%0D%0A";
-
-    const type = document.querySelector("input[name='type']:checked");
-    if (type) contenu += "- Bijou : " + type.nextElementSibling.innerText + "%0D%0A";
-
-    const options = [
-        ["lait", "Lait maternel"],
-        ["crins", "Crins de cheval"],
-        ["paillettes", "Paillettes (" + document.getElementById("couleurPaillettes").value + ")"],
-        ["poils", "Poils d'animal"],
-        ["cheveux", "Cheveux"],
-        ["bracelet", "Chaîne bracelet"],
-        ["chaine", "Chaîne collier"]
-    ];
-
-    contenu += "%0D%0AOptions :%0D%0A";
-    options.forEach(o => {
-        if (document.getElementById(o[0]).checked) {
-            contenu += "- " + o[1] + "%0D%0A";
-        }
-    });
-
-    contenu += "%0D%0ATotal : " + document.getElementById("total").innerText;
-
-    window.location.href = "mailto:TON_EMAIL_ICI?subject=Commande Bijou&body=" + contenu;
-}
 </script>
-</head>
 
+</head>
 <body>
 <div class="container">
 
-<h1>Commande de Bijoux</h1>
+<h1>Commande de Bijou Personnalisé</h1>
 
-<section>
+<form action="https://formsubmit.co/TON_EMAIL_ICI" method="POST">
+
+<!-- confirmation auto envoyée au client -->
+<input type="hidden" name="_autoresponse" value="Merci pour votre commande ! Voici votre bon de commande :">
+
+<!-- redirection vers une page merci -->
+<input type="hidden" name="_next" value="https://google.com">
+
+<h2>Vos coordonnées</h2>
+
+<label>Nom :<input type="text" name="Nom" required></label>
+<label>Prénom :<input type="text" name="Prénom" required></label>
+<label>Email :<input type="email" name="Email" required></label>
+<label>Téléphone :<input type="text" name="Téléphone" required></label>
+<label>Adresse postale :<textarea name="Adresse" required></textarea></label>
+
 <h2>Type de bijou</h2>
-<label><input type="radio" name="type" value="charm" onclick="updateTotal()"> Charm – 10€</label>
-<label><input type="radio" name="type" value="collier" onclick="updateTotal()"> Collier (formats divers) – 10€</label>
-<label><input type="radio" name="type" value="collierCharms" onclick="updateTotal()"> Collier en charms – 20€</label>
-<label><input type="radio" name="type" value="boucles" onclick="updateTotal()"> Boucles d’oreilles – 20€</label>
-</section>
+<label><input type="radio" name="Type" value="Charm (10€)" onclick="updateTotal()"> Charm – 10€</label>
+<label><input type="radio" name="Type" value="Collier (10€)" onclick="updateTotal()"> Collier – 10€</label>
+<label><input type="radio" name="Type" value="Collier charms (20€)" onclick="updateTotal()"> Collier en charms – 20€</label>
+<label><input type="radio" name="Type" value="Boucles (20€)" onclick="updateTotal()"> Boucles d’oreilles – 20€</label>
 
-<section>
 <h2>Options</h2>
 
-<label><input type="checkbox" id="lait" onclick="updateTotal()"> Lait maternel – 5€</label>
-<label><input type="checkbox" id="crins" onclick="updateTotal()"> Crins de cheval – 5€</label>
+<label><input type="checkbox" name="Lait maternel" id="lait" onclick="updateTotal()"> Lait maternel – 5€</label>
+<label><input type="checkbox" name="Crins" id="crins" onclick="updateTotal()"> Crins de cheval – 5€</label>
+<label><input type="checkbox" name="Paillettes" id="paillettes" onclick="updateTotal()"> Paillettes – 5€</label>
 
-<label><input type="checkbox" id="paillettes" onclick="updateTotal()"> Paillettes – 5€</label>
-<label>Couleur :
-<select id="couleurPaillettes">
-    <option>or</option>
-    <option>argent</option>
-    <option>bleu</option>
-    <option>rose</option>
-    <option>vert</option>
-    <option>rouge</option>
-    <option>violet</option>
+<label>Couleur des paillettes :
+<select name="Couleur paillettes">
+    <option>or</option><option>argent</option><option>bleu</option>
+    <option>rose</option><option>vert</option><option>rouge</option><option>violet</option>
 </select>
 </label>
 
-<label><input type="checkbox" id="poils" onclick="updateTotal()"> Poils d’animal – 10€</label>
-<label><input type="checkbox" id="cheveux" onclick="updateTotal()"> Cheveux – 10€</label>
-<label><input type="checkbox" id="bracelet" onclick="updateTotal()"> Chaîne de bracelet – 5€</label>
-<label><input type="checkbox" id="chaine" onclick="updateTotal()"> Chaîne de collier – 10€</label>
-</section>
+<label><input type="checkbox" name="Poils d'animal" id="poils" onclick="updateTotal()"> Poils d’animal – 10€</label>
+<label><input type="checkbox" name="Cheveux" id="cheveux" onclick="updateTotal()"> Cheveux – 10€</label>
+<label><input type="checkbox" name="Chaîne bracelet" id="bracelet" onclick="updateTotal()"> Chaîne de bracelet – 5€</label>
+<label><input type="checkbox" name="Chaîne collier" id="chaine" onclick="updateTotal()"> Chaîne de collier – 10€</label>
 
 <div class="total">Total : <span id="total">0 €</span></div>
 
-<button onclick="envoyerCommande()">Envoyer la commande par email</button>
+<button type="submit">Envoyer la commande</button>
+</form>
 
 </div>
 </body>
