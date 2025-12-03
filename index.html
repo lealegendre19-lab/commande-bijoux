@@ -23,4 +23,74 @@
   .container {
     max-width: 950px;
     margin: 60px auto;
-    padding:
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 22px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.25);
+    box-shadow: 0 10px 35px rgba(0,0,0,0.35);
+  }
+
+  h1 {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    letter-spacing: 1px;
+    color: #f5f2ef;
+    margin-bottom: 25px;
+  }
+
+  /* Iframe responsive moderne */
+  .responsive-iframe-container {
+    position: relative;
+    width: 100%;
+    
+    /* Permet au contenu d’être proportionnel */
+    padding-top: 130%; /* ratio mobile-friendly */
+    
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .responsive-iframe-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  @media (min-width: 768px) {
+    /* Ratio tablette/desktop */
+    .responsive-iframe-container {
+      padding-top: 90%;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    /* Ratio idéal desktop */
+    .responsive-iframe-container {
+      padding-top: 75%;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Commander un bijou personnalisé</h1>
+
+  <div class="responsive-iframe-container">
+    <iframe 
+      allowtransparency="true" 
+      allowfullscreen="true"
+      allow="geolocation; microphone; camera"
+      src="https://dgsuaepp.forms.app/form/692ec076d2d42700025c80b9">
+    </iframe>
+  </div>
+</div>
+
+</body>
+</html>
